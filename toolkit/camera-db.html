@@ -1,1 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Control Database - AI Video Generation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(to bottom right, #0f172a, #1e293b, #0f172a);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 40px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .icon {
+            font-size: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: 1.1rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #60a5fa;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .controls {
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            background: #1e293b;
+            border: 2px solid #334155;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #60a5fa;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: #1e293b;
+            border: 2px solid #334155;
+            border-radius: 8px;
+            color: #cbd5e1;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            background: #334155;
+        }
+
+        .filter-btn.active {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
+        }
+
+        .results-count {
+            color: #94a3b8;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .data-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .data-item {
+            background: #1e293b;
+            border: 2px solid #334155;
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s;
+        }
+
+        .data-item:hover {
+            border-color: #60a5fa;
+        }
+
+        .item-header {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 20px;
+            margin-bottom: 15px;
+            align-items: start;
+        }
+
+        .category-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .cat-distance { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
+        .cat-angles { background: rgba(234, 179, 8, 0.2); color: #facc15; }
+        .cat-basic { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .cat-advanced { background: rgba(168, 85, 247, 0.2); color: #a78bfa; }
+        .cat-cinematic { background: rgba(236, 72, 153, 0.2); color: #f472b6; }
+
+        .shot-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #60a5fa;
+            margin-bottom: 5px;
+        }
+
+        .item-content {
+            display: grid;
+            gap: 15px;
+        }
+
+        .content-row {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 10px;
+        }
+
+        .content-label {
+            color: #64748b;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .content-text {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .keyword-tag {
+            background: #334155;
+            color: #cbd5e1;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+
+        .example-box {
+            background: #0f172a;
+            border-left: 3px solid #60a5fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .example-label {
+            color: #64748b;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        .example-text {
+            color: #cbd5e1;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #64748b;
+        }
+
+        .no-results-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .content-row {
+                grid-template-columns: 1fr;
+            }
+
+            .item-header {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Volver al inicio</a>
+        
+        <header>
+            <div class="header-content">
+                <span class="icon">📹</span>
+                <h1>Camera Control Database</h1>
+            </div>
+            <p class="subtitle">Complete reference for AI video generation • 42 camera techniques</p>
+        </header>
+
+        <div class="controls">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    class="search-input" 
+                    placeholder="Search shots, definitions, keywords..."
+                >
+            </div>
+
+            <div class="filters" id="filters">
+                <button class="filter-btn active" data-category="All">All</button>
+                <button class="filter-btn" data-category="Distance & Size">Distance & Size</button>
+                <button class="filter-btn" data-category="Angles">Angles</button>
+                <button class="filter-btn" data-category="Basic Moves">Basic Moves</button>
+                <button class="filter-btn" data-category="Advanced Physical">Advanced Physical</button>
+                <button class="filter-btn" data-category="Cinematic & AI">Cinematic & AI</button>
+            </div>
+        </div>
+
+        <div class="results-count" id="resultsCount"></div>
+
+        <div class="data-grid" id="dataGrid"></div>
+
+        <div class="no-results" id="noResults" style="display: none;">
+            <div class="no-results-icon">🔍</div>
+            <p style="font-size: 1.2rem;">No shots found matching your criteria</p>
+        </div>
+    </div>
+
+    <script>
+        const cameraData = [
+            // DISTANCE & SIZE
+            { category: 'Distance & Size', shot: 'Extreme Wide Shot (EWS)', definition: 'The subject is barely visible in the frame', primary: 'Establish the vastness, show scale, create context', keywords: 'EWS, Vast, Landscape', example: 'Extreme wide shot of [img 1] standing in a vast snowy landscape' },
+            { category: 'Distance & Size', shot: 'Wide Shot (WS) / Long Shot', definition: 'Shows the full subject (head to toe)', primary: 'Establish context, show subject in environment', keywords: 'Wide Shot, Long Shot', example: 'Wide shot of [img 1] standing full body in a snowstorm' },
+            { category: 'Distance & Size', shot: 'Full Shot', definition: 'Frames the subject from head to feet', primary: 'Show full body language and setting', keywords: 'Full Shot, Head to Toe', example: 'Full body shot of [img 1] from head to toe' },
+            { category: 'Distance & Size', shot: 'Medium Long Shot (MLS)', definition: 'Knees up. Also known as a three-quarter shot', primary: 'More focus on the subject while showing environment', keywords: 'MLS, Three-Quarter Shot', example: 'Medium long shot of [img 1] from knees up' },
+            { category: 'Distance & Size', shot: 'Cowboy Shot', definition: 'Mid-thighs up. Originates from western films', primary: 'Powerful and confident framing', keywords: 'Cowboy Shot, Mid-Thighs Up', example: 'Cowboy shot of [img 1] framed from mid-thighs' },
+            { category: 'Distance & Size', shot: 'Medium Shot (MS)', definition: 'Waist up. The standard storytelling shot', primary: 'Captures body language and facial expressions', keywords: 'Medium Shot, MS, Waist Up', example: 'Medium shot of [img 1] from waist up' },
+            { category: 'Distance & Size', shot: 'Medium Close-Up (MCU)', definition: 'Chest/Shoulders up', primary: 'Focuses on the face but keeps some context', keywords: 'MCU, Chest Up', example: 'Medium close-up of [img 1] from chest up' },
+            { category: 'Distance & Size', shot: 'Close-Up (CU)', definition: 'Head and neck only', primary: 'Pure emotion and facial expressions', keywords: 'Close-Up, CU, Pure Emotion', example: 'Close-up of [img 1], framing face and neck' },
+            { category: 'Distance & Size', shot: 'Extreme Close-Up (ECU)', definition: 'Focuses on a specific detail (eyes, hands, etc.)', primary: 'High intensity, highlights crucial details', keywords: 'ECU, Focus on Detail', example: 'Extreme close-up on the eyes of [img 1]' },
+            { category: 'Distance & Size', shot: 'Macro Shot', definition: 'Microscopic level detail (extreme close)', primary: 'Reveal texture or highly detailed elements', keywords: 'Macro Shot, Microscopic Detail', example: 'Macro shot of the texture of [img 1] war paint' },
+            
+            // ANGLES
+            { category: 'Angles', shot: 'Eye-Level', definition: 'Neutral perspective', primary: 'Realism; how we see the world naturally', keywords: 'Eye Level, Neutral Angle', example: 'Eye-level shot of [img 1] facing camera' },
+            { category: 'Angles', shot: 'Low Angle', definition: 'Camera looks "up" at the subject', primary: 'Makes them look powerful, dominant, imposing', keywords: 'Low Angle, Dominant', example: 'Low angle shot looking up at [img 1]' },
+            { category: 'Angles', shot: 'High Angle', definition: 'Camera looks "down" at the subject', primary: 'Makes them look small, weak, or vulnerable', keywords: 'High Angle, Vulnerable, Small', example: 'High angle shot looking down at [img 1]' },
+            { category: 'Angles', shot: 'Overhead / Bird\'s Eye View', definition: 'Looking straight down (90 degrees)', primary: 'Graphic and map-like, often disorienting', keywords: 'Bird\'s Eye View, Overhead Shot', example: 'Direct overhead bird\'s eye view of [img 1]' },
+            { category: 'Angles', shot: 'Worm\'s Eye View', definition: 'Extremely low, looking up from ground level', primary: 'Exaggerates height/size, gives dramatic perspective', keywords: 'Worm\'s Eye View, Ground Level', example: 'Worm\'s eye view from the ground of [img 1]' },
+            { category: 'Angles', shot: 'Dutch Angle / Canted Angle', definition: 'The camera is tilted sideways on its axis', primary: 'Creates unease, disorientation, tension', keywords: 'Dutch Angle, Canted Angle', example: 'Dutch angle shot of [img 1] with tilted horizon' },
+            { category: 'Angles', shot: 'Over-the-Shoulder (OTS)', definition: 'Looking past one person\'s shoulder at another', primary: 'Essential for dialogue, group dynamics', keywords: 'Over-the-Shoulder, OTS', example: 'Over-the-shoulder shot looking past [img 1]' },
+            { category: 'Angles', shot: 'Point of View (POV)', definition: 'The camera "is" the character', primary: 'Viewer experiences what the character sees', keywords: 'POV, First Person Perspective', example: 'First person POV shot of someone approaching [img 1]' },
+            { category: 'Angles', shot: 'Selfie Angle', definition: 'High angle, arm\'s length, facing camera', primary: 'Common in social media and vlogs', keywords: 'Selfie Angle, Arm\'s Length', example: 'Handheld selfie angle of [img 1] facing camera' },
+            { category: 'Angles', shot: 'Ground Level', definition: 'Camera sits directly on the ground', primary: 'Immersive close-up of the environment', keywords: 'Ground Level, Surface View', example: 'Ground level shot, camera on snow surface' },
+
+            // BASIC MOVES
+            { category: 'Basic Moves', shot: 'Static', definition: 'No movement. The camera is locked in place', primary: 'Focus on subtle subject and atmospheric details', keywords: 'Static Shot, Locked Off Camera', example: 'Static camera shot of [img 1] standing still' },
+            { category: 'Basic Moves', shot: 'Pan Left / Pan Right', definition: 'The camera rotates horizontally on its axis', primary: 'Follow a subject, reveal a new element', keywords: 'Pan Left, Pan Right, Horizontal Rotation', example: 'Camera pans slowly from left to right across scene' },
+            { category: 'Basic Moves', shot: 'Tilt Up / Tilt Down', definition: 'The camera rotates vertically on its axis', primary: 'Reveal a subject\'s height or surroundings', keywords: 'Tilt Up, Tilt Down, Vertical Rotation', example: 'Camera tilts up, starting at feet and ending at face' },
+            { category: 'Basic Moves', shot: 'Zoom In', definition: 'The lens focal length changes to magnify', primary: 'Focus attention, flatten the perspective', keywords: 'Zoom In, Lens Zoom', example: 'Slow zoom in on [img 1]\'s face' },
+            { category: 'Basic Moves', shot: 'Zoom Out', definition: 'The lens widens to reveal more context', primary: 'Reveal context, shift focus to environment', keywords: 'Zoom Out, Wide Reveal', example: 'Zoom out from [img 1]\'s eyes to full landscape' },
+            { category: 'Basic Moves', shot: 'Pedestal Up / Down', definition: 'The "entire" camera physically moves up or down', primary: 'Change the subject\'s relative position in frame', keywords: 'Pedestal Up, Pedestal Down', example: 'Camera pedestals up, rising from ground to eye level' },
+
+            // ADVANCED PHYSICAL
+            { category: 'Advanced Physical', shot: 'Dolly In', definition: 'The camera physically moves forward toward subject', primary: 'Increases intensity/intimacy, immersive', keywords: 'Dolly In, Moving Forward', example: 'Smooth cinematic dolly in toward [img 1]' },
+            { category: 'Advanced Physical', shot: 'Dolly Out', definition: 'The camera physically moves backward away from subject', primary: 'Signals "leaving" or "concluding", reveals context', keywords: 'Dolly Out, Moving Backward', example: 'Cinematic dolly out from [img 1] revealing landscape' },
+            { category: 'Advanced Physical', shot: 'Truck Left / Truck Right', definition: 'The camera physically moves sideways (lateral)', primary: 'Keeps pace with a moving subject or reveals space', keywords: 'Truck Left, Track Right, Parallel Movement', example: 'Truck right camera movement following [img 1]' },
+            { category: 'Advanced Physical', shot: 'Orbit / Arc', definition: 'The camera circles around the subject', primary: 'Heroic and cinematic, showcases 360-degree view', keywords: 'Orbit Shot, Arc Motion, 360 Degree', example: 'Camera orbits 360 degrees around [img 1]' },
+            { category: 'Advanced Physical', shot: 'Crane / Jib / Boom', definition: 'The camera sweeps up and down with a crane arm', primary: 'Grand reveals, establishing shots with motion', keywords: 'Crane Shot, Jib Move', example: 'Crane shot starting low on [img 1], sweeping up' },
+
+            // CINEMATIC & AI
+            { category: 'Cinematic & AI', shot: 'Dolly Zoom (The "Vertigo" Effect)', definition: 'The camera moves backward while zooming in (or vice versa)', primary: 'The background warps while subject stays same size', keywords: 'Dolly Zoom, Vertigo Effect', example: 'Dolly zoom effect with [img 1] in center, background warping' },
+            { category: 'Cinematic & AI', shot: 'Crash Zoom', definition: 'An incredibly fast, sudden zoom in or out', primary: 'Comedic or dramatic impact, jarring effect', keywords: 'Crash Zoom, Sudden Zoom', example: 'Rapid crash zoom into [img 1]\'s eyes' },
+            { category: 'Cinematic & AI', shot: 'FPV Drone', definition: 'Fast, flying movement that swoops through spaces', primary: 'High energy, dynamic, immersive exploration', keywords: 'FPV Drone, High Energy Flight', example: 'FPV drone shot flying through forest toward [img 1]' },
+            { category: 'Cinematic & AI', shot: 'Bullet Time', definition: 'Time freezes (or slows down) as camera rotates around', primary: 'Highlights a critical, slowed-down moment', keywords: 'Bullet Time, Time Freeze, Matrix Effect', example: 'Bullet time effect with [img 1] frozen, camera orbiting' },
+            { category: 'Cinematic & AI', shot: 'Handheld', definition: 'Adds artificial "shake" to mimic human movement', primary: 'Gritty and realistic, adds immediacy and rawness', keywords: 'Handheld Camera, Shaky Cam', example: 'Handheld camera shot of [img 1] with natural shake' },
+            { category: 'Cinematic & AI', shot: 'Roll', definition: 'The camera rotates its horizon line (z-axis roll)', primary: 'Creates extreme disorientation or stylistic flair', keywords: 'Roll, Horizon Rotation', example: 'Camera rolling 180 degrees showing [img 1] upside down' },
+            { category: 'Cinematic & AI', shot: 'Rack Focus', definition: 'The focus shifts from a foreground to background subject (or vice versa)', primary: 'Directs the viewer\'s attention smoothly', keywords: 'Rack Focus, Shift Focus', example: 'Rack focus from frosted pine branch to [img 1]\'s face' },
+            { category: 'Cinematic & AI', shot: 'Pull Back Reveal', definition: 'Starts close on a detail and pulls back to reveal context', primary: 'Dramatic reveal of context or scale', keywords: 'Pull Back Reveal, Context Reveal', example: 'Pull back reveal from [img 1]\'s eyes to vast landscape' },
+            { category: 'Cinematic & AI', shot: 'Push In Through', definition: 'Camera pushes through an object (window, door, crowd)', primary: 'Seamless transition or immersive entry', keywords: 'Push In Through, Pass Through', example: 'Camera pushes through snowy branches toward [img 1]' },
+            { category: 'Cinematic & AI', shot: 'Whip Pan', definition: 'Extremely fast horizontal pan creating motion blur', primary: 'Energetic transition or sudden reveal', keywords: 'Whip Pan, Fast Pan, Motion Blur', example: 'Whip pan from landscape to [img 1]\'s face' },
+            { category: 'Cinematic & AI', shot: 'Tracking Shot', definition: 'Camera follows subject smoothly through space', primary: 'Maintains focus while showing journey/movement', keywords: 'Tracking Shot, Follow Shot', example: 'Tracking shot following [img 1] walking through forest' }
+        ];
+
+        let currentCategory = 'All';
+        let searchQuery = '';
+
+        function getCategoryClass(category) {
+            const map = {
+                'Distance & Size': 'cat-distance',
+                'Angles': 'cat-angles',
+                'Basic Moves': 'cat-basic',
+                'Advanced Physical': 'cat-advanced',
+                'Cinematic & AI': 'cat-cinematic'
+            };
+            return map[category] || '';
+        }
+
+        function filterData() {
+            return cameraData.filter(item => {
+                const matchesCategory = currentCategory === 'All' || item.category === currentCategory;
+                const matchesSearch = searchQuery === '' || 
+                    item.shot.toLowerCase().includes(searchQuery) ||
+                    item.definition.toLowerCase().includes(searchQuery) ||
+                    item.keywords.toLowerCase().includes(searchQuery);
+                return matchesCategory && matchesSearch;
+            });
+        }
+
+        function renderData() {
+            const filtered = filterData();
+            const grid = document.getElementById('dataGrid');
+            const noResults = document.getElementById('noResults');
+            const resultsCount = document.getElementById('resultsCount');
+
+            resultsCount.textContent = `Showing ${filtered.length} of ${cameraData.length} shots`;
+
+            if (filtered.length === 0) {
+                grid.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            grid.style.display = 'flex';
+            noResults.style.display = 'none';
+
+            grid.innerHTML = filtered.map(item => `
+                <div class="data-item">
+                    <div class="item-header">
+                        <span class="category-badge ${getCategoryClass(item.category)}">${item.category}</span>
+                        <div class="shot-title">${item.shot}</div>
+                    </div>
+                    <div class="item-content">
+                        <div class="content-row">
+                            <div class="content-label">Definition:</div>
+                            <div class="content-text">${item.definition}</div>
+                        </div>
+                        <div class="content-row">
+                            <div class="content-label">Primary Use:</div>
+                            <div class="content-text">${item.primary}</div>
+                        </div>
+                        <div class="content-row">
+                            <div class="content-label">Keywords:</div>
+                            <div class="keywords">
+                                ${item.keywords.split(',').map(kw => `<span class="keyword-tag">${kw.trim()}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="example-box">
+                        <div class="example-label">Example Prompt:</div>
+                        <div class="example-text">${item.example}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Event Listeners
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            searchQuery = e.target.value.toLowerCase();
+            renderData();
+        });
+
+        document.getElementById('filters').addEventListener('click', (e) => {
+            if (e.target.classList.contains('filter-btn')) {
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                currentCategory = e.target.dataset.category;
+                renderData();
+            }
+        });
+
+        // Initial render
+        renderData();
+    </script>
+</body>
+</html>
 
