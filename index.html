@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alberto Peralta — Filmmaker</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="Inicio">
+        <img src="img/logo.png" alt="Alberto Peralta Logo" class="brand-logo">
+      </a>
+
+      <button
+        class="menu-btn"
+        type="button"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="site-nav"
+      >
+        <span class="menu-label">MENU</span>
+        <span class="menu-icon" aria-hidden="true">
+          <i></i><i></i><i></i>
+        </span>
+      </button>
+    </div>
+
+    <!-- Overlay menu -->
+    <nav class="nav-overlay" id="site-nav" aria-hidden="true">
+      <div class="nav-inner container">
+        <a class="nav-link" href="#top">HOME</a>
+        <a class="nav-link" href="#projects">HIRE</a>
+
+        <button class="nav-close" type="button" aria-label="Cerrar menú">
+          ✕
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ================= MAIN ================= -->
+  <main>
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" aria-label="Portada">
+      <div class="slider-container">
+        <div class="slider">
+          <div class="slide active">
+            <img src="img/Banner1.jpeg" alt="Banner 1" class="hero-image" loading="eager" />
+          </div>
+          <div class="slide">
+            <img src="img/Banner2.png" alt="Banner 2" class="hero-image" loading="eager" />
+          </div>
+          <div class="slide">
+            <img src="img/Banner3.png" alt="Banner 3" class="hero-image" loading="eager" />
+          </div>
+        </div>
+        <div class="slider-nav">
+          <button class="slider-dot active" aria-label="Ver imagen 1"></button>
+          <button class="slider-dot" aria-label="Ver imagen 2"></button>
+          <button class="slider-dot" aria-label="Ver imagen 3"></button>
+        </div>
+        <div class="hero-overlay" aria-hidden="true"></div>
+      </div>
+
+      <div class="container hero-inner">
+      </div>
+    </section>
+    <!-- ============ PROJECTS ============ -->
+    <section class="projects" id="projects">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">I AM ALBERTO PERALTA</h1>
+
+          <div class="ornament" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+
+          <p class="hero-subtitle">
+            Hi I'm a <strong>Filmmaker</strong>, Audiovisual Artist and Animator based in Barcelona.
+            I have a passion for writing stories and make them happens.
+          </p>
+
+          <a href="mailto:albert.poulain@gmail.com" class="btn btn-outline">HIRE ME</a>
+        </div>
+      </div>
+    </section>
+    <!-- ============ EDUCATION & EXPERIENCE ============ -->
+    <section class="split" id="resume" aria-label="Educación y experiencia">
+      <div class="container split-inner">
+
+          <!-- EDUCATION -->
+          <div class="panel">
+            <h2 class="section-title">EDUCATION</h2>
+
+            <div class="ornament ornament-small centered" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+
+            <article class="item">
+              <h3 class="item-title">
+                DEGREE IN ELECTRONIC ENGINEERING IN COMMUNICATIONS
+              </h3>
+              <p class="item-meta">TecnoCampus</p>
+              <p class="item-years">2000 — 2003</p>
+            </article>
+
+            <article class="item">
+              <h3 class="item-title">FILM &amp; TELEVISION PRODUCER</h3>
+              <p class="item-meta">
+                Escuela superior de imagen y diseño
+              </p>
+              <p class="item-years">2005 — 2006</p>
+            </article>
+
+            <article class="item">
+              <h3 class="item-title">D.O.P</h3>
+              <p class="item-meta">
+                Centre d'estudis cinematogràfics de Catalunya
+              </p>
+              <p class="item-years">2006 — 2009</p>
+            </article>
+          </div>
+
+          <!-- EXPERIENCE -->
+          <div class="panel">
+            <h2 class="section-title">EXPERIENCE</h2>
+
+            <div class="ornament ornament-small centered" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+
+            <article class="item">
+              <h3 class="item-title">FILMMAKER</h3>
+              <p class="item-meta">Freelance</p>
+              <p class="item-years">2009 — Current</p>
+            </article>
+
+            <article class="item">
+              <h3 class="item-title">CREATIVE DIRECTOR &amp; COO</h3>
+              <p class="item-meta">Catarsys productions</p>
+              <p class="item-years">2010 — 2018</p>
+            </article>
+
+            <article class="item">
+              <h3 class="item-title">CO-FOUNDER &amp; COO.</h3>
+              <p class="item-meta">Elysium Media</p>
+              <p class="item-years">2018 — Current</p>
+            </article>
+          </div>
+
+      </div>
+    </section>
+
+    <!-- ============ SKILLS ============ -->
+    <section class="skills" id="skills" aria-label="Habilidades">
+      <div class="container">
+        <h2 class="section-title centered">MY SKILLS</h2>
+
+        <div class="ornament ornament-small centered" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+
+        <p class="section-lead centered">
+          I am a multidisciplinary audiovisual artist but these are my best skills
+        </p>
+
+        <div class="skills-list">
+          <div class="skill" data-value="90">
+            <div class="skillbar-title">
+              <span>SCRIPTWRITING</span>
+              <span class="percentage-text">90%</span>
+            </div>
+            <div class="skill-full-bar">
+              <div class="skill-arrow"></div>
+              <div class="skill-bar-fill"></div>
+            </div>
+          </div>
+
+          <div class="skill" data-value="88">
+            <div class="skillbar-title">
+              <span>FILM DIRECTOR</span>
+              <span class="percentage-text">88%</span>
+            </div>
+            <div class="skill-full-bar">
+              <div class="skill-arrow"></div>
+              <div class="skill-bar-fill"></div>
+            </div>
+          </div>
+
+          <div class="skill" data-value="75">
+            <div class="skillbar-title">
+              <span>ANIMATOR</span>
+              <span class="percentage-text">75%</span>
+            </div>
+            <div class="skill-full-bar">
+              <div class="skill-arrow"></div>
+              <div class="skill-bar-fill"></div>
+            </div>
+          </div>
+
+          <div class="skill" data-value="90">
+            <div class="skillbar-title">
+              <span>D.O.P</span>
+              <span class="percentage-text">90%</span>
+            </div>
+            <div class="skill-full-bar">
+              <div class="skill-arrow"></div>
+              <div class="skill-bar-fill"></div>
+            </div>
+          </div>
+
+          <div class="skill" data-value="85">
+            <div class="skillbar-title">
+              <span>FILM EDITOR</span>
+              <span class="percentage-text">85%</span>
+            </div>
+            <div class="skill-full-bar">
+              <div class="skill-arrow"></div>
+              <div class="skill-bar-fill"></div>
+            </div>
+          </div>
+
+          <div class="skill" data-value="85">
+            <div class="skillbar-title">
+              <span>COLORIST</span>
+              <span class="percentage-text">85%</span>
+            </div>
+            <div class="skill-full-bar">
+              <div class="skill-arrow"></div>
+              <div class="skill-bar-fill"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <ul class="social">
+        <li><a href="https://www.linkedin.com/in/alberto-peralta-guerrero/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a href="https://catartsysproducciones.com/" target="_blank"><i class="fa fa-globe"></i></a></li>
+      </ul>
+
+      <p class="copyright">
+        &copy; <span id="year"></span> ALL RIGHTS RESERVED
+      </p>
+      
+      <p class="footer-love">Craft With <img src="https://web.archive.org/web/20211209132210im_/http://defatch-demo.com/themes/juster/agency/wp-content/uploads/sites/8/2015/09/heart.png" alt="Love"> by <a href="#top">Alberto Peralta</a></p>
+    </div>
+  </footer>
+
+  <!-- ================= JS ================= -->
+  <script src="js/slider.js"></script>
+  <script>
+    // Skills animation
+    document.addEventListener('DOMContentLoaded', function() {
+      const skills = document.querySelectorAll('.skill');
+      
+      // Animate skills with staggered delay
+      skills.forEach((skill, index) => {
+        setTimeout(() => {
+          const barFill = skill.querySelector('.skill-bar-fill');
+          const arrow = skill.querySelector('.skill-arrow');
+          const value = skill.dataset.value;
+          
+          if (barFill) {
+            barFill.style.width = value + '%';
+          }
+          if (arrow) {
+            arrow.style.left = value + '%';
+          }
+        }, index * 200); // 200ms delay between each skill
+      });
+    });
+    
+    // Current year for copyright
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  
+  <script src="app.js"></script>
+
+</body>
+</html>
