@@ -1,1 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Video Generation Tools</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #94a3b8;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .tool-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 2px solid #334155;
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            border-color: #60a5fa;
+            box-shadow: 0 10px 40px rgba(96, 165, 250, 0.3);
+        }
+
+        .tool-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .tool-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #60a5fa;
+        }
+
+        .tool-description {
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .tool-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: rgba(96, 165, 250, 0.1);
+            color: #60a5fa;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+        }
+
+        .footer {
+            text-align: center;
+            color: #64748b;
+            padding: 30px 0;
+            border-top: 1px solid #334155;
+        }
+
+        .footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎬 AI Video Generation Tools</h1>
+            <p class="subtitle">Herramientas profesionales para creación de contenido con IA</p>
+        </header>
+
+        <div class="tools-grid">
+            <!-- Camera Control Database -->
+            <a href="camera-db.html" class="tool-card">
+                <div class="tool-icon">📹</div>
+                <h2 class="tool-title">Camera Control Database</h2>
+                <p class="tool-description">
+                    Base de datos completa con 42+ técnicas cinematográficas para generación de video con IA. 
+                    Incluye shots, ángulos, movimientos y efectos cinemáticos con ejemplos de prompts.
+                </p>
+                <div class="tool-tags">
+                    <span class="tag">42 Técnicas</span>
+                    <span class="tag">5 Categorías</span>
+                    <span class="tag">Búsqueda</span>
+                </div>
+            </a>
+
+            <!-- Placeholder para futuras herramientas -->
+            <div class="tool-card" style="opacity: 0.6; cursor: default; border-style: dashed;">
+                <div class="tool-icon">🎨</div>
+                <h2 class="tool-title">Próximamente...</h2>
+                <p class="tool-description">
+                    Más herramientas y recursos para creadores de contenido con IA están en desarrollo.
+                </p>
+                <div class="tool-tags">
+                    <span class="tag">Coming Soon</span>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Creado con ❤️ por AlbertoPG para la comunidad de AI Video Generation</p>
+            <p style="margin-top: 10px;">
+                <a href="https://github.com" target="_blank">GitHub</a> • 
+                <a href="https://claude.ai" target="_blank">Built with Claude</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
 
